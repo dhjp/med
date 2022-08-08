@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/64d58efce2.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Patient Medicine</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="forms-container">
+        <div class="signin-signup">
+<!-- =========================SUBMIT BUTTON============================================-->
+          <form action="#h2" class="sign-in-form">
+            <h2 class="title">New Patient</h2>
+            <div class="input-field">
+              <i class="fa fa-address-card-o"></i>
+              <input type="text" id= "Rollbox" placeholder="ID Number" />
+            </div>
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              <input type="text" input id= "Namebox"  placeholder="Name" />
+            </div>
+            <div class="input-field">
+              <i class="fa fa-phone"></i>
+              <input type="text" input id= "Secbox" placeholder="Phone Number" />
+            </div>
+            <textarea placeholder="Patient Medicine..." id="Genbox" ></textarea>
+
+          
+            <button id="Insbtn" type="submit" value="Submit" class="btn solid">Submit</button>
+
+          </form>
+<!-- =========================find BUTTON=============================================-->
+          
+          <form action="#" class="sign-up-form">
+            <h2 class="title">Find Patient</h2>
+
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              <input type="text" placeholder="ID Number" />
+            </div>
+
+            
+
+            <button id="Selbtn" type="submit" class="btn" value="Find"> Find</button>
+
+          </form>
+<!-- ====================================================================-->
+
+          
+        </div>
+      </div>
+
+      <div class="panels-container">
+        <div class="panel left-panel">
+          <div class="content">
+            <h3>New here ?</h3>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
+              ex ratione. Aliquid!
+            </p>
+            <button class="btn transparent" id="sign-up-btn">
+              Sign up
+            </button>
+          </div>
+          <img src="img/log.svg" class="image" alt="" />
+        </div>
+        <div class="panel right-panel">
+          <div class="content">
+            <h3>One of us ?</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
+              laboriosam ad deleniti.
+            </p>
+            <button class="btn transparent" id="sign-in-btn">
+              Sign in
+            </button>
+          </div>
+          <img src="img/register.svg" class="image" alt="" />
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyCnnddIJlBVk8bAxkULLQaQNA2aBilgdn4",
+        authDomain: "system-of-medicine.firebaseapp.com",
+        projectId: "system-of-medicine",
+        storageBucket: "system-of-medicine.appspot.com",
+        messagingSenderId: "791780435590",
+        appId: "1:791780435590:web:fcef39d82f11f15a4c5307",
+        measurementId: "G-690XXH2QPQ"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+
+      import{
+          getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField
+      }
+      from "https://www.gstatic.com/firebasejs/9.9.2/firebase-firestore.js";
+
+      const db = getFirestore();
+
+
+//===================================Refernces==========================================//   
+
+      let NameBox = document.getElementById("Namebox");
+      let RollBox = document.getElementById("Rollbox");
+      let SecBox = document.getElementById("Secbox");
+      let GenBox = document.getElementById("Genbox");
+
+      let insBtn = document.getElementById("Insbtn");
+      let selBtn = document.getElementById("Selbtn");
+      let updBtn = document.getElementById("Updbtn");
+      let delBtn = document.getElementById("Delbtn");
+
+//===================================Refernces==========================================//
+
+      async function AddDocument_AutoID() {
+          var ref=collection(db,"TheStudentsList");
+
+          const docRef=await addDoc(
+              ref, {
+                  NameOfstd: NameBox.value,
+                  RollNo:RollBox.value,
+                  Section:SecBox.value,
+                  Gender:GenBox.value
+              }
+          )
+          .then(()=>{
+              alert("deta added successfully");
+          })
+          .catch((error)=>{
+              alert("Unsuccessuful operation error:"+error);
+          });
+          console.log("document id is" + docRef.id);
+      }
+
+
+
+      async function AddDocument_CustomID() {
+          var ref=doc(db,"TheStudentsList",RollBox.value);
+
+          await setDoc(
+              ref, {
+                  NameOfstd: NameBox.value,
+                  RollNo:RollBox.value,
+                  Section:SecBox.value,
+                  Gender:GenBox.value
+              }
+          )
+          .then(()=>{
+              alert("deta added successfully");
+          })
+          .catch((error)=>{
+              alert("Unsuccessuful operation error:"+error);
+          });
+      }
+
+
+//=================GETTING DOCUMENT============================================================//
+  async function GetADocument() {
+      var ref=doc(db,"TheStudentsList",RollBox.value);
+      const docSnap=await getDoc(ref);
+
+      if(docSnap.exists()){
+          NameBox.value=docSnap.data().NameOfstd;
+          SecBox.value=docSnap.data().Section;
+          GenBox.value=docSnap.data().Gender;
+          
+      }
+      else{
+          alert("No Such Document");
+      }
+  } 
+//=============================================================================//
+
+//=================updatein DOCUMENT deta======================================//
+async function UpdateFieldsInADocument() {
+          var ref=doc(db,"TheStudentsList",RollBox.value);
+
+      await updateDoc(
+          ref, {
+              NameOfstd: NameBox.value,
+              RollNo:RollBox.value,
+              Section:SecBox.value,
+              Gender:GenBox.value
+          }
+      )
+      .then(()=>{
+          alert("deta updated successfully");
+      })
+      .catch((error)=>{
+          alert("Unsuccessuful operation error:"+error);
+      });
+      }
+
+//=============================================================================//
+//=================DELETING DOCUMENT deta======================================//
+      async function DeleteDocument() {
+              var ref=doc(db,"TheStudentsList",RollBox.value);
+              const docSnap=await getDoc(ref);
+
+              if(!docSnap.exists()){
+                alert("Document does not exist");
+                return;
+              }
+              await deleteDoc(ref)
+              .then(()=>{
+                       
+                      alert("deta delet successfully");
+                  })
+                  .catch((error)=>{
+                      alert("Unsuccessuful operation error:"+error);
+                  });
+              }
+              
+
+//=============================================================================//
+      insBtn.addEventListener("click",AddDocument_CustomID);
+      selBtn.addEventListener("click",GetADocument);
+      updBtn.addEventListener("click",UpdateFieldsInADocument);
+      delBtn.addEventListener("click",DeleteDocument);
+
+    </script>
+
+    
+    <script src="app.js"></script>
+  </body>
+</html>
