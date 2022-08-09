@@ -139,6 +139,42 @@ textarea{
  width: 0px;
 }
 
+div#cont{
+  display: none;
+}
+
+button#Updbtn{
+  width: 80px;
+  background-color: #30df19;
+  float: right;
+  margin-right: 4px;
+}
+
+button#Delbtn{
+  width: 80px;
+  background-color: #df2323;
+}
+
+button#Clebtn{
+  width: 80px;
+  background-color: #f8e804;
+  float: right;
+ 
+
+}
+
+button#Delbtn:hover {
+  background-color: #cf0000;
+}
+
+button#Clebtn:hover {
+  background-color: #88a000;
+}
+
+button#Updbtn:hover {
+  background-color: #008f00;
+}
+
 .social-text {
   padding: 0.7rem 0;
   font-size: 1rem;
