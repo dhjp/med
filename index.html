@@ -17,18 +17,22 @@
 <!-- =========================SUBMIT BUTTON============================================-->
           <form action="#h2" class="sign-in-form">
             <h2 class="title">New Patient</h2>
+
             <div class="input-field">
               <i class="fa fa-address-card-o"></i>
-              <input type="text" id= "Rollbox" placeholder="ID Number" />
+              <input type="text" id= "Rollbox" placeholder="ID Number" required />
             </div>
+
             <div class="input-field">
               <i class="fas fa-user"></i>
               <input type="text" input id= "Namebox"  placeholder="Name" />
             </div>
+
             <div class="input-field">
               <i class="fa fa-phone"></i>
               <input type="text" input id= "Secbox" placeholder="Phone Number" />
             </div>
+
             <textarea placeholder="Patient Medicine..." id="Genbox" ></textarea>
 
           
@@ -42,13 +46,29 @@
 
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="ID Number" />
+              <input type="text" id= "Rollbo" placeholder="ID Number" />
             </div>
 
+            <button id="Selbtn" type="submit" class="btn" value="Find" onclick="show()"> Find</button>
+           
+  <div id="cont" style=" max-width: 380px; width: 100%;">
+            <div class="input-field" >
+              <i class="fas fa-user"></i>
+              <input type="text" input id= "Namebo"  placeholder="Name" />
+            </div>
+
+            <div class="input-field" >
+              <i class="fa fa-phone"></i>
+              <input type="text" input id= "Secbo" placeholder="Phone Number" />
+            </div>
+
+            <textarea placeholder="Patient Medicine..." id="Genbo" ></textarea>
+
+            <button id="Delbtn" type="submit" class="btn" >Delete</button>
+            <button id="Clebtn" type="submit" class="btn" >Clear</button>
+            <button id="Updbtn" type="submit" class="btn" >Update</button>
             
-
-            <button id="Selbtn" type="submit" class="btn" value="Find"> Find</button>
-
+</div>
           </form>
 <!-- ====================================================================-->
 
@@ -59,26 +79,24 @@
       <div class="panels-container">
         <div class="panel left-panel">
           <div class="content">
-            <h3>New here ?</h3>
+            <h3>Old Patient ?</h3>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-              ex ratione. Aliquid!
+              Visit to know old patient details.
             </p>
             <button class="btn transparent" id="sign-up-btn">
-              Sign up
+              Visit
             </button>
           </div>
           <img src="img/log.svg" class="image" alt="" />
         </div>
         <div class="panel right-panel">
           <div class="content">
-            <h3>One of us ?</h3>
+            <h3>New Patient ?</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-              laboriosam ad deleniti.
+              Go to enter new patient details.
             </p>
             <button class="btn transparent" id="sign-in-btn">
-              Sign in
+              Go
             </button>
           </div>
           <img src="img/register.svg" class="image" alt="" />
@@ -123,6 +141,11 @@
       let RollBox = document.getElementById("Rollbox");
       let SecBox = document.getElementById("Secbox");
       let GenBox = document.getElementById("Genbox");
+
+      let RollBo = document.getElementById("Rollbo");
+      let NameBo = document.getElementById("Namebo");
+      let SecBo = document.getElementById("Secbo");
+      let GenBo = document.getElementById("Genbo");
 
       let insBtn = document.getElementById("Insbtn");
       let selBtn = document.getElementById("Selbtn");
@@ -175,16 +198,18 @@
 
 //=================GETTING DOCUMENT============================================================//
   async function GetADocument() {
-      var ref=doc(db,"TheStudentsList",RollBox.value);
+      var ref=doc(db,"TheStudentsList",RollBo.value);
       const docSnap=await getDoc(ref);
 
       if(docSnap.exists()){
-          NameBox.value=docSnap.data().NameOfstd;
-          SecBox.value=docSnap.data().Section;
-          GenBox.value=docSnap.data().Gender;
+          NameBo.value=docSnap.data().NameOfstd;
+          SecBo.value=docSnap.data().Section;
+          GenBo.value=docSnap.data().Gender;
+
           
       }
       else{
+
           alert("No Such Document");
       }
   } 
@@ -192,14 +217,14 @@
 
 //=================updatein DOCUMENT deta======================================//
 async function UpdateFieldsInADocument() {
-          var ref=doc(db,"TheStudentsList",RollBox.value);
+          var ref=doc(db,"TheStudentsList",RollBo.value);
 
       await updateDoc(
           ref, {
-              NameOfstd: NameBox.value,
-              RollNo:RollBox.value,
-              Section:SecBox.value,
-              Gender:GenBox.value
+              NameOfstd: NameBo.value,
+              RollNo:RollBo.value,
+              Section:SecBo.value,
+              Gender:GenBo.value
           }
       )
       .then(()=>{
@@ -213,7 +238,7 @@ async function UpdateFieldsInADocument() {
 //=============================================================================//
 //=================DELETING DOCUMENT deta======================================//
       async function DeleteDocument() {
-              var ref=doc(db,"TheStudentsList",RollBox.value);
+              var ref=doc(db,"TheStudentsList",RollBo.value);
               const docSnap=await getDoc(ref);
 
               if(!docSnap.exists()){
