@@ -17,10 +17,11 @@ sign_in_btn.addEventListener("click", () => {
   container.classList.remove("sign-up-mode");
 });
 
-//=======================CLEAR=======================================
-let btnclaer = document.querySelector('Submit');
-let inputs = document.querySelectorAll('input');
+//=======================BUTTON HIND=======================================
+function show(){
+  document.getElementById('cont').style.display="block"
+  document.getElementById('Delbtn').style.display="inline"
+  document.getElementById('Updbtn',).style.display="inline"
+  document.getElementById('Clebtn',).style.display="inline"  
+  }
 
-btnclaer.addEventListener('click',()=>{
-  inputs.forEach(input => input.value = '');
-});
