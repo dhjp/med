@@ -1,3 +1,27 @@
+
+
+
+//=======================BUTTON CLAER=======================================
+$(document).ready(function(){
+  $('#Insbtn').click(function(){
+   $('.clear').val('');
+  });
+ }); 
+
+ $(document).ready(function(){
+  $('#Clebtn' ).click(function(){
+    $('.Clear_find').val('');
+  });
+ });
+
+ $(document).ready(function(){
+  $('#Clebtn' ).click(function(){
+    $('.Clear_find_02').val('');
+  });
+ });
+
+//=======================BUTTON CLAER=======================================
+
 const textarea = document.querySelector("textarea");
 textarea.addEventListener("keyup", e=>{
   textarea.style.height = "100px";
@@ -24,4 +48,3 @@ function show(){
   document.getElementById('Updbtn',).style.display="inline"
   document.getElementById('Clebtn',).style.display="inline"  
   }
-
